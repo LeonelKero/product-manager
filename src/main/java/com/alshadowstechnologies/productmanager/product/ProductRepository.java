@@ -8,6 +8,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findProductByPrice(final Double price);
 
-    List<Product> findByCategoryName(final String categoryName);
+    List<Product> findByCategoryNameIgnoreCase(final String categoryName);
 
 }
