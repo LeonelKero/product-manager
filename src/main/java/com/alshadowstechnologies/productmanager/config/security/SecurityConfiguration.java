@@ -22,10 +22,12 @@ public class SecurityConfiguration {
 
     private final UserDetailsService userDetailsService;
     private final AuthenticationFilter authenticationFilter;
+    private final AuthEntryPoint authExceptionHandler;
 
-    public SecurityConfiguration(UserDetailsService userDetailsService, AuthenticationFilter authenticationFilter) {
+    public SecurityConfiguration(UserDetailsService userDetailsService, AuthenticationFilter authenticationFilter, AuthEntryPoint authExceptionHandler) {
         this.userDetailsService = userDetailsService;
         this.authenticationFilter = authenticationFilter;
+        this.authExceptionHandler = authExceptionHandler;
     }
 
     @Bean
@@ -47,7 +49,8 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/api-docs/**").permitAll()
                         .anyRequest().authenticated())
-                .addFilterBefore(this.authenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(this.authenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(this.authExceptionHandler));
 
         return http.build();
     }
