@@ -6,6 +6,7 @@ import com.alshadowstechnologies.productmanager.category.dto.CategoryResponse;
 import com.alshadowstechnologies.productmanager.product.Product;
 import com.alshadowstechnologies.productmanager.product.dto.ProductRequestDto;
 import com.alshadowstechnologies.productmanager.product.dto.ProductResponseDto;
+import org.apache.commons.lang3.StringUtils;
 
 // Todo: Can be turned into a component
 public class EntityToDtoMapper {
@@ -16,7 +17,10 @@ public class EntityToDtoMapper {
                 product.getName(),
                 product.getDescription(),
                 product.getPrice(),
-                product.getCategory().getName()
+                new CategoryResponse(
+                        product.getCategory().getId(),
+                        product.getCategory().getName()
+                )
         );
     }
 
@@ -30,11 +34,14 @@ public class EntityToDtoMapper {
     }
 
     public static Category toCategory(final CategoryRequest categoryRequest) {
-        return new Category(categoryRequest.name().trim().toUpperCase());
+        return new Category(uniformlyCapitalize(categoryRequest.name().trim().toLowerCase()));
     }
 
     public static CategoryResponse toCategoryResponse(final Category category) {
         return new CategoryResponse(category.getId(), category.getName());
     }
 
+    public static String uniformlyCapitalize(final String input) {
+        return StringUtils.capitalize(input);
+    }
 }
