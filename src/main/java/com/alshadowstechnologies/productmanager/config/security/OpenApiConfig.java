@@ -1,4 +1,4 @@
-package com.alshadowstechnologies.productmanager.config;
+package com.alshadowstechnologies.productmanager.config.security;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
