@@ -21,7 +21,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category getCateGoryByName(final String name) {
-        return this.categoryRepository.findByName(name)
+        return this.categoryRepository.findByNameIgnoreCase(name)
                 .orElseThrow(() -> new CategoryNotFoundException("Category not found, with name: " + name));
     }
 
@@ -43,7 +43,7 @@ public class CategoryServiceImpl implements CategoryService {
      */
     @Override
     public CategoryResponse addCategory(CategoryRequest categoryRequest) {
-        if (this.categoryRepository.findByName(categoryRequest.name()).isPresent())
+        if (this.categoryRepository.findByNameIgnoreCase(categoryRequest.name().trim()).isPresent())
             throw new CategoryAlreadyExitsException("Category already exists, with name: " + categoryRequest.name());
         return EntityToDtoMapper.toCategoryResponse(this.categoryRepository.save(EntityToDtoMapper.toCategory(categoryRequest)));
     }
@@ -53,10 +53,5 @@ public class CategoryServiceImpl implements CategoryService {
         final var category = getCateGoryById(id);
         category.setName(categoryRequest.name());
         this.categoryRepository.save(category);
-    }
-
-    @Override
-    public void deleteCategory(Long id) {
-        this.categoryRepository.delete(getCateGoryById(id));
     }
 }
