@@ -24,12 +24,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductResponseDto getProduct(final Long productId) {
         return this.productRepository.findById(productId)
-                .map(product -> new ProductResponseDto(
-                        product.getId(),
-                        product.getName(),
-                        product.getDescription(),
-                        product.getPrice(),
-                        product.getCategory().getName()))
+                .map(EntityToDtoMapper::toProductResponseDto)
                 .orElseThrow(() -> new ProductNotFoundException("Product Not Found, Product Id: " + productId));
     }
 
@@ -43,25 +38,16 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductResponseDto> getProductsByCategory(String category) {
-        return this.productRepository.findByCategoryName(category)
+    public List<ProductResponseDto> getProductsByCategory(final String category) {
+        return this.productRepository.findByCategoryNameIgnoreCase(category.trim())
                 .stream()
                 .map(EntityToDtoMapper::toProductResponseDto)
                 .collect(Collectors.toList());
     }
 
-    /*
-    @Override
-    public List<ProductResponseDto> getProductsOfSamePrice(Double price) {
-        return this.productRepository.findProductByPrice(price).stream()
-                .map(EntityToDtoMapper::toProductResponseDto)
-                .collect(Collectors.toList());
-    }
-     */
-
     @Override
     public ProductResponseDto addProduct(final ProductRequestDto requestDto) {
-        final var category = this.categoryService.getCateGoryByName(requestDto.categoryName());
+        final var category = this.categoryService.getCateGoryByName(requestDto.categoryName().trim());
         Product newProduct = EntityToDtoMapper.toProduct(requestDto, category);
         return EntityToDtoMapper.toProductResponseDto(this.productRepository.save(newProduct));
     }
@@ -79,8 +65,9 @@ public class ProductServiceImpl implements ProductService {
             existingProduct.setCategory(category);
 
             this.productRepository.save(existingProduct);
+        } else {
+            throw new ProductNotFoundException("Product not found, Product Id: " + productId);
         }
-        throw new ProductNotFoundException("Product not found, Product Id: " + productId);
     }
 
     @Override
@@ -91,8 +78,9 @@ public class ProductServiceImpl implements ProductService {
             final var existingProduct = optionalProduct.get();
             existingProduct.setCategory(category);
             this.productRepository.save(existingProduct);
+        } else {
+            throw new ProductNotFoundException("Product not found, Product Id: " + productId);
         }
-        throw new ProductNotFoundException("Product not found, Product Id: " + productId);
     }
 
     @Override
@@ -100,11 +88,4 @@ public class ProductServiceImpl implements ProductService {
         final var existingProduct = this.getProduct(productId);
         this.productRepository.deleteById(existingProduct.id());
     }
-
-    /*
-    @Override
-    public Long countProducts() {
-        return this.productRepository.count();
-    }
-     */
 }
