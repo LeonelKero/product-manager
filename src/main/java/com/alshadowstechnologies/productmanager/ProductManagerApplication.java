@@ -4,6 +4,7 @@ import com.alshadowstechnologies.productmanager.category.Category;
 import com.alshadowstechnologies.productmanager.category.CategoryRepository;
 import com.alshadowstechnologies.productmanager.product.Product;
 import com.alshadowstechnologies.productmanager.product.ProductRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
