@@ -18,7 +18,7 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping(path = {"/"})
+    @GetMapping
     public ResponseEntity<List<ProductResponseDto>> getProducts() {
         return new ResponseEntity<>(this.productService.getProducts(), HttpStatus.OK);
     }
