@@ -50,12 +50,14 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toList());
     }
 
+    /*
     @Override
     public List<ProductResponseDto> getProductsOfSamePrice(Double price) {
         return this.productRepository.findProductByPrice(price).stream()
                 .map(EntityToDtoMapper::toProductResponseDto)
                 .collect(Collectors.toList());
     }
+     */
 
     @Override
     public ProductResponseDto addProduct(final ProductRequestDto requestDto) {
@@ -104,8 +106,10 @@ public class ProductServiceImpl implements ProductService {
         this.productRepository.deleteById(existingProduct.id());
     }
 
+    /*
     @Override
     public Long countProducts() {
         return this.productRepository.count();
     }
+     */
 }
