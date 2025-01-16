@@ -6,3 +6,12 @@ spring:
     active: dev
   application:
     name: product-manager
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    operations-sorter: method
