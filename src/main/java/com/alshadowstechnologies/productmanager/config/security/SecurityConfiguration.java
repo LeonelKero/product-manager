@@ -1,4 +1,4 @@
-package com.alshadowstechnologies.productmanager.config;
+package com.alshadowstechnologies.productmanager.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
