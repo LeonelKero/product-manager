@@ -5,6 +5,12 @@ import com.alshadowstechnologies.productmanager.category.dto.CategoryResponse;
 
 import java.util.List;
 
+/**
+ * This defines the contract for anyone who is willing to manage categories.
+ *
+ * @apiNote A Category cannot be deleted. Once created use other methods to alter it.
+ * You can delete a category only if it is not linked to a product.
+ */
 public interface CategoryService {
     Category getCateGoryByName(final String name);
 
@@ -16,5 +22,4 @@ public interface CategoryService {
 
     void updateCategory(final Long id, final CategoryRequest categoryRequest);
 
-    void deleteCategory(final Long id);
 }
