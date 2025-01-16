@@ -1,9 +1,9 @@
 package com.alshadowstechnologies.productmanager.product;
 
 import com.alshadowstechnologies.productmanager.category.CategoryServiceImpl;
+import com.alshadowstechnologies.productmanager.exception.ProductNotFoundException;
 import com.alshadowstechnologies.productmanager.product.dto.ProductRequestDto;
 import com.alshadowstechnologies.productmanager.product.dto.ProductResponseDto;
-import com.alshadowstechnologies.productmanager.exception.ProductNotFoundException;
 import com.alshadowstechnologies.productmanager.util.EntityToDtoMapper;
 import org.springframework.stereotype.Service;
 
@@ -62,12 +62,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductResponseDto addProduct(final ProductRequestDto requestDto) {
         final var category = this.categoryService.getCateGoryByName(requestDto.categoryName());
-        Product newProduct = new Product(
-                requestDto.name(),
-                requestDto.description(),
-                requestDto.price(),
-                category
-        );
+        Product newProduct = EntityToDtoMapper.toProduct(requestDto, category);
         return EntityToDtoMapper.toProductResponseDto(this.productRepository.save(newProduct));
     }
 

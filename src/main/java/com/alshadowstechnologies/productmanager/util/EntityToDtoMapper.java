@@ -7,6 +7,7 @@ import com.alshadowstechnologies.productmanager.product.Product;
 import com.alshadowstechnologies.productmanager.product.dto.ProductRequestDto;
 import com.alshadowstechnologies.productmanager.product.dto.ProductResponseDto;
 
+// Todo: Can be turned into a component
 public class EntityToDtoMapper {
 
     public static ProductResponseDto toProductResponseDto(final Product product) {
@@ -21,15 +22,15 @@ public class EntityToDtoMapper {
 
     public static Product toProduct(final ProductRequestDto productRequestDto, final Category category) {
         return new Product(
-                productRequestDto.name(),
-                productRequestDto.description(),
+                productRequestDto.name().trim(),
+                productRequestDto.description().trim(),
                 productRequestDto.price(),
                 category
         );
     }
 
     public static Category toCategory(final CategoryRequest categoryRequest) {
-        return new Category(categoryRequest.name());
+        return new Category(categoryRequest.name().trim().toUpperCase());
     }
 
     public static CategoryResponse toCategoryResponse(final Category category) {
