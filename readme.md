@@ -13,6 +13,7 @@ This a Spring Boot application for managing products. It is made using following
 - Spring Boot Devtools (dev only)
 - Apache Common lang3
 - Spring Boot Starter Test
+- Spring Starter Security
 
 ## Features
 
