@@ -45,7 +45,7 @@ public class ProductController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping(path = {"/{pId}/category/{cId}"})
+    @PostMapping(path = {"/{pId}/categories/{cId}"})
     public ResponseEntity<Void> updateProductCategory(final @PathVariable(name = "pId") Long productId, final @PathVariable(name = "cId") Long categoryId) {
         this.productService.updateProductCategory(productId, categoryId);
         return new ResponseEntity<>(HttpStatus.OK);
