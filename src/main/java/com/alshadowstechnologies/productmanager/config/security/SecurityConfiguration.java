@@ -62,20 +62,20 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
-//        http.csrf(AbstractHttpConfigurer::disable)
-//                .cors(Customizer.withDefaults())
-//                .authorizeHttpRequests(authorizeRequests -> authorizeRequests.anyRequest().permitAll());
-
-        http
-                .csrf(AbstractHttpConfigurer::disable)
+        http.csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers(HttpMethod.POST, "/login").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/api-docs/**").permitAll()
-                        .anyRequest().authenticated())
-                .addFilterBefore(this.authenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(this.authExceptionHandler));
+                .authorizeHttpRequests(authorizeRequests -> authorizeRequests.anyRequest().permitAll());
+
+//        http
+//                .csrf(AbstractHttpConfigurer::disable)
+//                .cors(Customizer.withDefaults())
+//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .authorizeHttpRequests(authorizeRequests -> authorizeRequests
+//                        .requestMatchers(HttpMethod.POST, "/login").permitAll()
+//                        .requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/api-docs/**").permitAll()
+//                        .anyRequest().authenticated())
+//                .addFilterBefore(this.authenticationFilter, UsernamePasswordAuthenticationFilter.class)
+//                .exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(this.authExceptionHandler));
 
         return http.build();
     }
